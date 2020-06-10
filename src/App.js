@@ -1,36 +1,35 @@
 import React from "react";
-import logo from "./logo.svg";
-import Animal from './Animal';
+import ListAnimal from "./Animal/ListAnimal";
+import BaseLayout from "./Layout/BaseLayout";
+import IncreaseNumber from "./components/IncreaseNumber";
+import Login from "./components/Login/Login";
 import "./App.css";
 
-function App() {
+class AppClass extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      a: 15,
+    };
+  }
+  render() {
+    return (
+      <div className="App">
+        {/* <BaseLayout> */}
+          <Login />
+        {/* </BaseLayout> */}
+      </div>
+    );
+  }
+}
+function AppFunction() {
+  const a = 5;
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload abc.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ backgroundColor: "black" }}
-        >
-          Learn React
-        </a>
-      </header>
-      <Animal name="cat" />
-      <Animal name="dog" />
+      <BaseLayout>
+        <div>{a}</div>
+      </BaseLayout>
     </div>
-    // JSX
   );
 }
-export const Game = () => (
-  <div style={{ backgroundColor: "red", color: "blue", textAlign: "center" }}>GAME</div>
-);
-export const Sport = () => (
-  <div style={{ backgroundColor: "red", color: "blue", textAlign: "center" }}>SPORT</div>
-);
-export default App;
+export default AppClass;
