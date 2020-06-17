@@ -3,6 +3,7 @@ import ListAnimal from "./Animal/ListAnimal";
 import BaseLayout from "./Layout/BaseLayout";
 import IncreaseNumber from "./components/IncreaseNumber";
 import Login from "./components/Login/Login";
+import TableUser from "./components/TableUser/TableUser";
 import "./App.css";
 
 class AppClass extends React.Component {
@@ -15,9 +16,9 @@ class AppClass extends React.Component {
   render() {
     return (
       <div className="App">
-        {/* <BaseLayout> */}
-          <Login />
-        {/* </BaseLayout> */}
+        <BaseLayout>
+          <TableUser/>
+        </BaseLayout>
       </div>
     );
   }

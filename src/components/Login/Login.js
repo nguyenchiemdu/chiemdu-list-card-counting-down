@@ -11,7 +11,11 @@ class Login extends React.Component {
   }
   changeInput = (e) => {
     console.log([e.target.name]);
-    this.setState({ [e.target.name]: e.target.value });
+    console.log([e.target.name]);
+    const name = e.target.name;
+    this.setState({ [e.target.name]: e.target.value }, () => {
+      console.log('this.state.address',this.state.address);
+    });
   };
   submit = (e) => {
     e.preventDefault();
@@ -35,6 +39,11 @@ class Login extends React.Component {
           onChange={this.changeInput}
           placeholder="city"
           name="city"
+        />
+        <input
+          onChange={this.changeInput}
+          placeholder="address"
+          name="address"
         />
         <button onClick={this.submit}>submit</button>
       </form>

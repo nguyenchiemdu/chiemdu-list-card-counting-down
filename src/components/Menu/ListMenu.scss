@@ -1,0 +1,11 @@
+.list-menu{
+    margin: 50px 0; 
+    text-align: left;
+    .ul-menu{
+        box-sizing: border-box;
+        padding: 10px;
+        background-color: grey;
+        display: flex;
+        justify-content: space-around;
+    }
+}

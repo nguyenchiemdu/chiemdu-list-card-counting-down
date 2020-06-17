@@ -1,4 +1,5 @@
 import React from "react";
+import ListMenu from "../components/Menu/ListMenu";
 
 class Header extends React.Component {
   constructor(props){
@@ -17,8 +18,9 @@ class Header extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div style={{margin:'50px 0'}}>
         HEADER
+        <ListMenu/>
         <button onClick={this.toggle(3)}>Toggle</button>
         {this.state.isToggle === true ? <div>Toggle ok!</div> : null}
       </div>
