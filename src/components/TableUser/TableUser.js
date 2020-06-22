@@ -5,15 +5,26 @@ class TableUser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      listUser: [
-        { id: 1, firstName: "Phan", lastName: "Tuan", age: 22 },
-        { id: 2, firstName: "Tung", lastName: "MTP", age: 30 },
-      ],
+      listUser: [],
       user: {},
       userForUpdate: {},
       isOpenUpdate: false,
+      loading: false,
     };
   }
+
+  // GET
+  componentDidMount() {
+    this.setState({ loading: true });
+    fetch("http://dummy.restapiexample.com/api/v1/employees")
+      .then((res) => {
+        return res.json();
+      })
+      .then((result) => {
+        this.setState({ loading: false, listUser: result.data });
+      });
+  }
+
   //   ADD(POST) UPDATE(PUT) DELETE(DELETE) GET
   // restful API
 
@@ -30,29 +41,111 @@ class TableUser extends React.Component {
       },
     });
   };
+
+  // POST
   handleAdd = () => {
-    this.setState({
-      listUser: [...this.state.listUser, this.state.user],
-    });
+    fetch("http://dummy.restapiexample.com/api/v1/create", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(this.state.user),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((result) => {
+        const { id, name, salary, age } = result.data;
+        this.setState({
+          listUser: [
+            ...this.state.listUser,
+            {
+              id: id,
+              employee_name: name,
+              employee_salary: salary,
+              employee_age: age,
+              profile_image: "",
+            },
+          ],
+        });
+      });
   };
+
+  // PUT
   handleUpdate = () => {
-    this.setState({
-      listUser: this.state.listUser.map((item) =>
-        item.id === this.state.userForUpdate.id
-          ? this.state.userForUpdate
-          : item
-      ),
-      isOpenUpdate: false,
-    });
+    // template string
+    fetch(
+      `http://dummy.restapiexample.com/api/v1/update/${this.state.userForUpdate.id}`,
+      {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(this.state.userForUpdate),
+      }
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((result) => {
+        if (result.status === "success") {
+          const { id, name, salary, age } = this.state.userForUpdate;
+          this.setState({
+            listUser: this.state.listUser.map((item) =>
+              item.id === this.state.userForUpdate.id
+                ? {
+                    id: id,
+                    employee_name: name,
+                    employee_salary: salary,
+                    employee_age: age,
+                    profile_image: "",
+                  }
+                : item
+            ),
+            isOpenUpdate: false,
+          });
+        }
+      });
   };
   handleClickUpdate = (item) => () => {
-    this.setState({ isOpenUpdate: true, userForUpdate: item });
+    const {
+      id,
+      employee_name,
+      employee_salary,
+      employee_age,
+      profile_image,
+    } = item;
+    this.setState({
+      isOpenUpdate: true,
+      userForUpdate: {
+        id,
+        name: employee_name,
+        salary: employee_salary,
+        age: employee_age,
+        profile_image,
+      },
+    });
   };
+
   // DELETE
   handleDeleteItem = (id) => () => {
-    this.setState({
-      listUser: this.state.listUser.filter((item) => item.id !== id),
-    });
+    fetch(`http://dummy.restapiexample.com/api/v1/delete/${id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((result) => {
+        this.setState({
+          listUser: this.state.listUser.filter((item) => item.id !== id),
+        });
+      });
   };
   render() {
     const { userForUpdate } = this.state;
@@ -63,13 +156,13 @@ class TableUser extends React.Component {
             <p>Phần thêm dữ liệu</p>
             <input
               onChange={this.handleChange}
-              placeholder="Firstname"
-              name="firstName"
+              placeholder="name"
+              name="name"
             />
             <input
               onChange={this.handleChange}
-              placeholder="Lastname"
-              name="lastName"
+              placeholder="salary"
+              name="salary"
             />
             <input onChange={this.handleChange} placeholder="Age" name="age" />
             <button onClick={this.handleAdd}>Add</button>
@@ -79,15 +172,15 @@ class TableUser extends React.Component {
               <p>Phần cập nhật dữ liệu</p>
               <input
                 onChange={this.handleChangeForUpdate}
-                placeholder="Firstname"
-                name="firstName"
-                value={userForUpdate.firstName}
+                placeholder="name"
+                name="name"
+                value={userForUpdate.name}
               />
               <input
                 onChange={this.handleChangeForUpdate}
-                placeholder="Lastname"
-                name="lastName"
-                value={userForUpdate.lastName}
+                placeholder="salary"
+                name="salary"
+                value={userForUpdate.salary}
               />
               <input
                 onChange={this.handleChangeForUpdate}
@@ -102,28 +195,34 @@ class TableUser extends React.Component {
           <table style={{ width: "100%" }}>
             <tbody>
               <tr>
-                <th>#</th>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Age</th>
+                {/* <th>#</th> */}
+                <th>id</th>
+                <th>employee_age</th>
+                <th>employee_name</th>
+                <th>employee_salary</th>
                 <th>Actions</th>
               </tr>
-              {this.state.listUser.map((item, idx) => (
-                <tr key={idx}>
-                  <td>{idx + 1}</td>
-                  <td>{item.firstName}</td>
-                  <td>{item.lastName}</td>
-                  <td>{item.age}</td>
-                  <td>
-                    <button onClick={this.handleClickUpdate(item)}>
-                      Update
-                    </button>
-                    <button onClick={this.handleDeleteItem(item.id)}>
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {this.state.loading === false ? (
+                this.state.listUser.map((item, idx) => (
+                  <tr key={idx}>
+                    {/* <td>{idx + 1}</td> */}
+                    <td>{item.id}</td>
+                    <td>{item.employee_age}</td>
+                    <td>{item.employee_name}</td>
+                    <td>{item.employee_salary}</td>
+                    <td>
+                      <button onClick={this.handleClickUpdate(item)}>
+                        Update
+                      </button>
+                      <button onClick={this.handleDeleteItem(item.id)}>
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr> Loading...</tr>
+              )}
             </tbody>
           </table>
         </div>
