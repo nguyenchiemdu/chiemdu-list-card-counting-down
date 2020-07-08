@@ -1,52 +1,97 @@
 import React from "react";
+import './Login.css';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      email: "",
-      password: "",
+      // isAllowSubmit: false,
     };
+    this.usernameRef = React.createRef();
+    this.buttonSubmitRef = React.createRef();
   }
-  changeInput = (e) => {
-    console.log([e.target.name]);
-    console.log([e.target.name]);
-    const name = e.target.name;
-    this.setState({ [e.target.name]: e.target.value }, () => {
-      console.log('this.state.address',this.state.address);
-    });
-  };
+  componentDidMount() {
+    // fetch("http://").then((res) => {
+    //   if (res.allow == true) {
+    //     this.setState({ isAllowSubmit: true });
+    //   }
+    // });
+  }
+  changeInput = (e) => {};
   submit = (e) => {
     e.preventDefault();
-    console.log(this.state);
+    console.log(this.usernameRef.current.value);
+  };
+  click = (e) => {
+    e.preventDefault();
+    // if (isAllowSubmit) {
+    //   this.submit();
+    // }
   };
   render() {
     return (
-      <form>
-        <input
-          onChange={this.changeInput}
-          placeholder="username"
-          name="username"
-        />
-        <input onChange={this.changeInput} placeholder="email" name="email" />
-        <input
-          onChange={this.changeInput}
-          placeholder="password"
-          name="password"
-        />
-        <input
-          onChange={this.changeInput}
-          placeholder="city"
-          name="city"
-        />
-        <input
-          onChange={this.changeInput}
-          placeholder="address"
-          name="address"
-        />
-        <button onClick={this.submit}>submit</button>
-      </form>
+      <div></div>
+      // // <form>
+      // //   <input ref={this.usernameRef} placeholder="username" name="username" />
+      // //   <button onClick={this.click}>Click</button>
+      // // </form>
+
+      // // // ul,li
+      // <html>
+      // <div>
+      //   <ul>
+      //     <li></li>
+      //     <li></li>
+      //     <li></li>
+      //   </ul>
+      //   <div>
+      //   <ul>
+      //     <li></li>
+      //     <li></li>
+      //     <li>
+      //       <li>
+      //         <ul>
+      //           <li></li>
+      //           <li>
+      //             <ul></ul>
+      //           </li>
+      //         </ul>
+      //       </li>
+      //     </li>
+      //   </ul>
+      //   </div>
+      // </div>
+      // </html>
+      // //  ( { () } ( {} ) {} {
+      // // regex
+      // // regular expression
+      // ("<li>|</li><ul></ul>")
+      // <ul>
+      //     <li></li>
+      //     <li></li>
+      //     <li></li>
+      //   </ul>
+      // <ul>
+      //     <li></li>
+      //     <li></li>
+      //     <li>
+      //       <li>
+      //         <ul>
+      //           <li></li>
+      //           <div>
+      //           <li>
+      //             <ul></ul>
+      //           </li>
+      //           </div>
+      //         </ul>
+      //       </li>
+      //     </li>
+      //   </ul>
+      // // level max 6
+      // // <div className="cha">
+      // //   <div className="con1"></div>
+      // //   <div className="con2"></div>
+      // // </div>
     );
   }
 }

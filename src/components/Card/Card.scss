@@ -1,0 +1,43 @@
+.card {
+  padding: 22px;
+  box-sizing: border-box;
+  border: 1px solid #e4e4e4;
+  border-radius: 5px;
+  transition: 0.3s;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 3px 3px 5px 5px #e2e1e1;
+  }
+  .ctn-img {
+    text-align: center;
+    img {
+      width: 100px;
+      height: 120px;
+      box-shadow: 1px 1px 3px 3px #cfcfcf;
+    }
+  }
+  .ctn-name {
+    margin: 3px 0;
+    .txt-name {
+      font-weight: bold;
+      color: green;
+      margin-left: 5px;
+    }
+  }
+  .quantity-item{
+      margin: 3px 0;
+      color: grey;
+  }
+  .txt-panto{
+      margin-left: 5px;
+      color: orange;
+      font-weight: bold;
+      font-size: 14px;
+  }
+  .txt-time{
+    margin-left: 5px;
+    color: blue;
+    font-weight: bold;
+    font-size: 14px;
+  }
+}
