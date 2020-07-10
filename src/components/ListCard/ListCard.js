@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "../Card/Card";
 import "./ListCard.scss";
+import moment from "moment";
 
 class ListCard extends React.Component {
   constructor(props) {
@@ -43,7 +44,7 @@ class ListCard extends React.Component {
           quantity: 40,
           time: 500,
         },
-        // nếu như time > 60s thì hiện theo format (0 hrs 2 mins)
+        // nếu như time > 60s thì hiện theo format (0 hrs 2 mins)npm
         // đơn vị của time là seconds, và nếu còn dưới 60s thì sẽ hiện theo format (59 seconds)
       ],
     };
