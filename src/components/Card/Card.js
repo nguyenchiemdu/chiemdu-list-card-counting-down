@@ -1,45 +1,23 @@
 import React from "react";
 import "./Card.scss";
-import moment, { now } from "moment";
+import "./Time";
+import Time from "./Time";
 
 class Card extends React.PureComponent {
   constructor(props){
     super(props);
-    this.getTime = ()=>{
-      const { dataItem } = this.props;
-      return(dataItem.time)
-    }
     this.state={
-      time : this.getTime(),
-        ok: true
+      Display : true,
     }
   }
-  componentDidMount(){
-    if(this.state.time>0){
-     setTimeout(()=>{
-      this.setState({
-        time: this.state.time -1,
-      },console.log(this.state.time))
-     },1000)
-    }
-  }
-  componentDidUpdate(){
-    if(this.state.time>0){
-      setTimeout(()=>{
-       this.setState({
-         time: this.state.time -1,
-       },console.log(this.state.time))
-      },1000)
-     }
+  NoDisplay = ()=>{
+    this.setState({
+      Display: false
+    })
   }
   render() {
     const { dataItem } = this.props;
-    const timeFormated = moment();
-    timeFormated.hour(0);
-    timeFormated.minutes(0);
-    timeFormated.seconds(this.state.time);
-    const {time} = this.state;
-    if (time!==0){
+    if (this.state.Display==true){
                 return(
                   <div className="card">
                   <div className="ctn-img">
@@ -68,21 +46,7 @@ class Card extends React.PureComponent {
                       height={15}
                       src="https://dummyimage.com/200x200/000/fff"
                     />{" "}
-                    <span className="txt-time"> 
-                    {
-                      (timeFormated.minutes() > 1) || (timeFormated.minutes()==1 && timeFormated.seconds() > 0) ? timeFormated.hours()+' hrs ':null
-                    }
-                    {
-                      (timeFormated.minutes() > 1) || (timeFormated.minutes()==1 && timeFormated.seconds() > 0) ? timeFormated.minutes()+' mins ': null
-                    }
-                    {
-                      (timeFormated.minutes()==1 && timeFormated.seconds()==0) ? 60+' s ' : null
-                    }
-                    {
-                      (timeFormated.minutes()==0) ? timeFormated.seconds()+' s ' : null
-                    }
-
-                    </span>
+                   <Time NoDisplay={this.NoDisplay} Time={this.props.dataItem.time}/>
                   </div>
                 </div>
                 )
